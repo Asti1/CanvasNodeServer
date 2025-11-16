@@ -18,9 +18,8 @@ import EnrollmentsRoutes from "./Canvas/Enrollments/routes.js";
 const app = express();
 // Configure CORS to support local and deployed frontends with credentials
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:3000",
+  process.env.CLIENT_URL || "http://localhost:3000"
   // Add common hosting domains here as needed
-  "https://cms-projects.vercel.app",
 ];
 const corsOptions = {
   credentials: true,
