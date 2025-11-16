@@ -18,8 +18,8 @@ import EnrollmentsRoutes from "./Canvas/Enrollments/routes.js";
 const app = express();
 // Configure CORS to support local and deployed frontends with credentials
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:3000"
-  // Add common hosting domains here as needed
+  process.env.CLIENT_URL || "http://localhost:3000",
+  "https://cms-projects.vercel.app",
 ];
 const corsOptions = {
   credentials: true,
@@ -33,7 +33,8 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// Note: Express v5 no longer accepts '*' in path-to-regexp.
+// Preflight is handled by the global cors middleware above; no explicit options route needed.
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
