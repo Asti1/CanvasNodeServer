@@ -16,12 +16,25 @@ import AssignmentsRoutes from "./Canvas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Canvas/Enrollments/routes.js";
 
 const app = express();
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-  })
-);
+// Configure CORS to support local and deployed frontends with credentials
+const allowedOrigins = [
+  process.env.CLIENT_URL || "http://localhost:3000",
+  // Add common hosting domains here as needed
+  "https://cms-projects.vercel.app",
+];
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
