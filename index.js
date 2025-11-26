@@ -21,7 +21,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: true,
   })
 );
 
@@ -32,8 +32,8 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    sameSite: "none",
-    secure: false,
+    sameSite: process.env.SERVER_ENV === "development" ? "lax" : "none",
+    secure: process.env.SERVER_ENV !== "development",
   },
 };
 // In production behind HTTPS, enable secure cookies and trust proxy
@@ -43,7 +43,6 @@ if (process.env.SERVER_ENV !== "development") {
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    domain: process.env.SERVER_URL,
   };
 }
 
