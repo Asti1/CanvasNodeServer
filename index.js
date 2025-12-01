@@ -13,8 +13,11 @@ import session from "express-session";
 import "dotenv/config";
 import ModulesRoutes from "./Canvas/Modules/routes.js";
 import AssignmentsRoutes from "./Canvas/Assignments/routes.js";
-import EnrollmentsRoutes from "./Canvas/Enrollments/routes.js";
-
+import EnrollmentsRoutes from "./Canvas/Enrollements/routes.js";
+import mongoose from "mongoose";
+const CONNECTION_STRING =
+  process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz";
+mongoose.connect(CONNECTION_STRING);
 const app = express();
 // Configure CORS to support local and deployed frontends with credentials
 
@@ -48,11 +51,11 @@ if (process.env.SERVER_ENV !== "development") {
 
 app.use(session(sessionOptions));
 app.use(express.json());
-UserRoutes(app, db);
+UserRoutes(app);
 CourseRoutes(app, db);
 ModulesRoutes(app, db);
-AssignmentsRoutes(app, db);
-EnrollmentsRoutes(app, db);
+AssignmentsRoutes(app);
+EnrollmentsRoutes(app);
 Lab5(app);
 Hello(app);
 PathParameters(app);
