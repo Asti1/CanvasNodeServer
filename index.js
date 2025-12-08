@@ -1,4 +1,5 @@
 import express from "express";
+console.log("Starting server...");
 import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
@@ -17,7 +18,15 @@ import EnrollmentsRoutes from "./Canvas/Enrollements/routes.js";
 import mongoose from "mongoose";
 const CONNECTION_STRING =
   process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz";
-mongoose.connect(CONNECTION_STRING);
+mongoose
+  .connect(CONNECTION_STRING)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err);
+  });
+
 const app = express();
 // Configure CORS to support local and deployed frontends with credentials
 
@@ -62,4 +71,6 @@ PathParameters(app);
 QueryParameters(app);
 WorkingWithObjects(app);
 WorkingWithArrays(app);
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000, () => {
+  console.log("Server is running on port 4000");
+});
