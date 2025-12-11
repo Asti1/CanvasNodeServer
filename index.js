@@ -15,6 +15,8 @@ import "dotenv/config";
 import ModulesRoutes from "./Canvas/Modules/routes.js";
 import AssignmentsRoutes from "./Canvas/Assignments/routes.js";
 import EnrollmentsRoutes from "./Canvas/Enrollements/routes.js";
+import QuizRoutes from "./Canvas/Quizzes/routes.js";
+import QuizSubmissionRoutes from "./Canvas/QuizSubmissions/routes.js";
 import mongoose from "mongoose";
 const CONNECTION_STRING =
   process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz";
@@ -65,6 +67,8 @@ CourseRoutes(app, db);
 ModulesRoutes(app, db);
 AssignmentsRoutes(app);
 EnrollmentsRoutes(app);
+QuizRoutes(app);
+QuizSubmissionRoutes(app);
 Lab5(app);
 Hello(app);
 PathParameters(app);
